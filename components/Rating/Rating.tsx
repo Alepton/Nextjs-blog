@@ -33,10 +33,9 @@ export const Rating = ({
           >
 
           <StarIcon
-            tabIndex={isEditable ? 0 : -1} /* событие перехода через Tab*/
+            tabIndex={isEditable ? 0 : -1}               /* событие перехода через Tab*/
             onKeyDown={(e: KeyboardEvent<SVGElement>) =>
-              isEditable && handleSpace(i + 1, e)
-            } /* событие фиксирования рейтинга через пробел*/
+              isEditable && handleSpace(i + 1, e)}       /* событие фиксирования рейтинга через пробел*/
           />
         </span>
       );
