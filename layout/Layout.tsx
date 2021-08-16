@@ -5,6 +5,7 @@ import { Header } from "./Header/Header";
 import { Sidebar } from "./Sidebar/Sidebar";
 import { Footer } from "./Footer/Footer";
 import React,{ FunctionComponent } from "react";
+import { AppContextProvider, IAppContext } from "../context/app.context";
 
 export const Layout = ({ children }: LayoutProps): JSX.Element => {
   return (
@@ -21,13 +22,14 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
 
 
 //HOC 'Higher-Order Component'
-export const withLayout = <T extends Record<strng, unknown>> (Component: FunctionComponent<T> ) => {
+export const withLayout = <T extends Record<strng, unknown> & IAppContext> (Component: FunctionComponent<T> ) => {
   return function withLayoutComponent(props: T): JSX.Element {
     return (
-      <Layout>
-        <Component {...props} />
-      </Layout>
-
+      <AppContextProvider menu={props.menu} firstCategory={props.firstCategory}>
+        <Layout>
+          <Component {...props} />
+        </Layout>
+      </AppContextProvider>
     );
   };
 };

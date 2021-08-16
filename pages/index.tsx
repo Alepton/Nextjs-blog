@@ -39,10 +39,6 @@ import { MenuItem } from "../interfaces/menu.interface";
       <Tag size="s" color='green'>Green</Tag>
       <Tag color='primary'>Primary</Tag>
       <Rating rating={rating} isEditable setRating={setRating}></Rating>
-      <ul>
-             {menu.map(m => (<li key={m._id.secondCategory}>{m._id.secondCategory}</li> ) ) }
-      </ul>
-
     </>
   );
 }
