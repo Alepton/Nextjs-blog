@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import React, { useEffect, useState } from "react";
-import { Button, Htag, P, Tag, Rating } from "../components";
+import { Button, Htag, P, Tag, Rating, Input } from "../components";
 import { withLayout } from "../layout/Layout";
 import axios from 'axios';
 import { MenuItem } from "../interfaces/menu.interface";
@@ -39,6 +39,7 @@ import { MenuItem } from "../interfaces/menu.interface";
       <Tag size="s" color='green'>Green</Tag>
       <Tag color='primary'>Primary</Tag>
       <Rating rating={rating} isEditable setRating={setRating}></Rating>
+      <Input placeholder='имя' />
     </>
   );
 }
