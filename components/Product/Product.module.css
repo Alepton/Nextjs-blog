@@ -1,6 +1,7 @@
 .product {
   display: grid;
-  grid-template-columns: [start] 70px [logoend] 30px [titlestart] calc(50% - 100px) [middle] 1fr [pricestart] auto [priceend] 40px [creditstart] auto [creditend] 40px [ratestart] auto [end];
+  grid-template-columns: [start] 70px [logoend] 30px [titlestart] calc(50% - 100px) [middle]
+                         1fr [pricestart] auto [priceend] 40px [creditstart] auto [creditend] 40px [ratestart] auto [end];
   margin-top: 30px;
   padding: 30px;
 }
@@ -12,10 +13,6 @@
 
 .title, .tags {
   grid-column: titlestart / middle;
-}
-
-.categories {
-  margin-top: 7px;
 }
 
 .price, .priceTitle {
@@ -53,6 +50,10 @@
   font-size: 20px;
   line-height: 27px;
   align-self: flex-end;
+}
+
+.category {
+  margin-top: 7px;
 }
 
 .price, .credit {
@@ -133,6 +134,11 @@
 .characteristicsDots {
   border-bottom: 1px dashed var(--gray-light);
   margin-bottom: 5px;
+}
+
+.reviews {
+  overflow: hidden;
+  padding: 30px;
 }
 
 .closed {
