@@ -15,7 +15,7 @@ export const Menu =(): JSX.Element => {
 
   const variants = {
     visible: {
-      marginBottom: 20,
+      marginBottom: 0,
       transition: {
         when: 'beforeChildren',
         staggerChildren: 0.1
@@ -76,8 +76,8 @@ export const Menu =(): JSX.Element => {
               <motion.div
                   layout
                   variants={variants}
-                  initial={ m.isOpend ? 'visible' : 'hidden' }
-                  animate={ m.isOpend ? 'visible' : 'hidden' }
+                  initial={ m.isOpened ? 'visible' : 'hidden' }
+                  animate={ m.isOpened ? 'visible' : 'hidden' }
                   className={cn(styles.secondLevelBlock)}
               >
                   {buildThirdLevel(m.pages, menuItem.route)}
