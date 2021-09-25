@@ -141,8 +141,9 @@
   padding: 30px;
 }
 
+/*
 .closed {
-  overflow: hidden; /*скрываем все что вылазит*/
+  overflow: hidden; /скрываем все что вылазит/
   max-height: 0;
   padding: 0;
 }
@@ -151,6 +152,7 @@
   max-height: auto;
   padding: 30;
 }
+*/
 
 .rateTitle a {
   color: var(--primary);
