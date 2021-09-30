@@ -2,22 +2,38 @@ import { RatingProps } from "./Rating.props";
 import styles from "./Rating.module.css";
 import cn from "classnames";
 import StarIcon from "./star.svg";
-import { useEffect, useState, KeyboardEvent, forwardRef, ForwardedRef } from "react";
+import { useEffect, useState, KeyboardEvent, forwardRef, ForwardedRef, useRef } from "react";
 
 export const Rating = forwardRef (({
   isEditable = false,
   rating,
   setRating,
   error,
+  tabIndex,
   ...props
 }: RatingProps, ref: ForwardedRef<HTMLDivElement> ): JSX.Element => {
   const [ratingArray, setRatingArrey] = useState<JSX.Element[]>(
     new Array(5).fill(<></>)
   );
 
+  const ratingArrayRef = useRef<(HTMLSpanElement | null)[]>([]);
+
   useEffect(() => {
     constructRating(rating);
-  }, [rating]);
+  }, [rating, tabIndex]);
+
+  const computeFocus = (r: number, i: number): number => {
+    if (!isEditable) {
+      return -1;
+    }
+    if (!rating && i == 0) {
+      return tabIndex ?? 0;
+    }
+    if (r == i + 1) {
+      return tabIndex ?? 0;
+    }
+    return -1;
+  };
 
   const constructRating = (currentRating: number) => {
     const updateArray = ratingArray.map((r: JSX.Element, i: number) => {
@@ -31,13 +47,12 @@ export const Rating = forwardRef (({
           onMouseEnter={() => changeDisplay(i + 1)} /*событие наведения мыши на объект */
           onMouseLeave={() => changeDisplay(rating)} /*событие ухода мыши с объекта - рейтинг должен вернуться к тому который был */
           onClick={() => onClick(i + 1)} /* а если мы кликнули, то рейтинг передается*/
+          tabIndex={computeFocus(rating, i)}
+          onKeyDown={handleKey}
+          ref={r => ratingArrayRef.current?.push(r)}
           >
 
-          <StarIcon
-            tabIndex={isEditable ? 0 : -1}               /* событие перехода через Tab*/
-            onKeyDown={(e: KeyboardEvent<SVGElement>) =>
-              isEditable && handleSpace(i + 1, e)}       /* событие фиксирования рейтинга через пробел*/
-          />
+          <StarIcon />
         </span>
       );
     });
@@ -60,11 +75,25 @@ export const Rating = forwardRef (({
     setRating(i); /* установить новый рейтинг*/
   };
 
-  const handleSpace = (i: number, e: KeyboardEvent<SVGElement>) => {
-    if (e.code != "Space" || !setRating) {
+  const handleKey = (e: KeyboardEvent) => {
+    if (!isEditable || !setRating) {
       return;
     }
-    setRating(i);
+    if (e.code == 'ArrowRight' || e.code == 'ArrowUp') {
+      if (!rating) {
+        setRating(1);
+      } else {
+        e.preventDefault();
+      setRating(rating < 5 ? rating + 1 : 5);
+      }
+      ratingArrayRef.current[rating]?.focus();
+
+    }
+    if (e.code == 'ArrowLeft' || e.code == 'ArrowDown') {
+      e.preventDefault();
+      setRating(rating > 1 ? rating - 1 : 1);
+      ratingArrayRef.current[rating - 2]?.focus();
+    }
   };
 
   return (

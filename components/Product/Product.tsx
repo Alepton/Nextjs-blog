@@ -29,6 +29,7 @@ export const Product = motion(forwardRef(({ product, className, ...props}: Produ
       behavior: 'smooth',                  /* плавный скрол до элемента*/
       block: 'start'                       /* до куда скролить, до старта блока*/
     });
+    reviewRef.current?.focus();
   };
 
   return (
@@ -117,7 +118,7 @@ export const Product = motion(forwardRef(({ product, className, ...props}: Produ
       <motion.div animate={isReviewOpened ? 'visible' : 'hidden'} variants={variants} initial='hidden'>
         <Card
           color="blue"
-          className={cn(styles.reviews)} ref={reviewRef}
+          className={cn(styles.reviews)} ref={reviewRef} tabIndex={isReviewOpened ? 0 : -1}
         >
           {product.reviews.map((r) => (
             <div key={r._id}>
@@ -125,7 +126,7 @@ export const Product = motion(forwardRef(({ product, className, ...props}: Produ
               <Divider />
             </div>
           ))}
-          <ReviewForm productId={product._id} />
+          <ReviewForm productId={product._id} isOpened={isReviewOpened} />
         </Card>
       </motion.div>
     </div>
